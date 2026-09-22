@@ -1,1 +1,2 @@
 ﻿# Rebase demo - commit 1
+# Rebase demo - commit 2
