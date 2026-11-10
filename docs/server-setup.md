@@ -30,3 +30,10 @@
 - `01-clean-install` — чистая установка.
 - `02-keys-configured` — настроен вход по ключу для devops.
 - `03-ssh-hardened` — усилена защита SSH.
+## 8. Веб-сервер
+- Установлен пакет: `nginx`.
+- Конфигурация ресурса: `/etc/nginx/sites-available/devops-site`.
+- Каталог ресурса: `/var/www/devops-site`, владелец `devops:devops`, права 755 (папка) и 644 (файлы).
+- Сертификат: `/etc/ssl/certs/devops.crt` (права 644).
+- Приватный ключ: `/etc/ssl/private/devops.key` (владелец root, права 600).
+- Срок действия сертификата: 365 дней.
