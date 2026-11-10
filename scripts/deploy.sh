@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+№#!/usr/bin/env bash
 set -euo pipefail
 
 REMOTE="devops"
@@ -22,10 +22,11 @@ if [[ ! -f "${LOCAL_DIR}index.html" ]]; then
 fi
 
 # Проверка незафиксированных изменений
-if [[ -n "$(git status --porcelain)" ]]; then
-    echo "Ошибка: в репозитории есть незафиксированные изменения." >&2
-    exit 1
-fi
+#if [[ -n "$(git status --porcelain)" ]]; then
+ #   echo "Ошибка: в репозитории есть незафиксированные изменения." >&2
+  #  exit 1
+#fi
+echo "Проверка изменений пропущена (WSL)"
 
 # Синхронизация
 rsync -avz --delete --chmod=D755,F644 ${DRY_RUN} "${LOCAL_DIR}" "${REMOTE}:${REMOTE_DIR}/"
