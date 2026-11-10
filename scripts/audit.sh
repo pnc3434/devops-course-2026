@@ -44,5 +44,12 @@ check "Nginx активен" "active" "$(systemctl is-active nginx)"
 check "Конфигурация nginx корректна" "0" "$(sudo nginx -t >/dev/null 2>&1; echo $?)"
 check "Сертификат действителен (>= 30 дней)" "0" "$(sudo openssl x509 -checkend 2592000 -noout -in /etc/ssl/certs/devops.crt >/dev/null 2>&1; echo $?)"
 check "Права на ключ 600" "600" "$(sudo stat -c '%a' /etc/ssl/private/devops.key)"
+echo "[5] Контейнеризация"
+check "Служба Docker активна" "active" "$(systemctl is-active docker)"
+check "СУБД в статусе healthy" "healthy" "$(sudo docker inspect -f '{{.State.Health.Status}}' app-db-1 2>/dev/null)"
+# Проверка, что порт 5000 слушается только на localhost
+PORT_5000=$(sudo ss -tln | grep ':5000 ' | awk '{print $4}')
+check "Порт 5000 только на 127.0.0.1" "127.0.0.1:5000" "$PORT_5000"
+check "Права на .env 600" "600" "$(sudo stat -c '%a' /home/devops/app/.env)"
 echo "Пройдено: $PASS, не пройдено: $FAIL"
 [[ $FAIL -eq 0 ]] && exit 0 || exit 1
